@@ -10,7 +10,8 @@ export const generateToken = (payload: JWTPayload): string => {
   const secret = process.env.JWT_SECRET || 'fallback_secret';
   const expiresIn = process.env.JWT_EXPIRE || '7d';
 
-  return jwt.sign(payload, secret, { expiresIn });
+  // Use type assertion to bypass TypeScript strict checking
+  return (jwt.sign as any)(payload, secret, { expiresIn });
 };
 
 export const verifyToken = (token: string): JWTPayload | null => {

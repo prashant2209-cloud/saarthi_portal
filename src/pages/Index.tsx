@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { MapPin, MessageSquare, Users, TrendingUp, ArrowRight, Shield, Zap } from "lucide-react";
+import { MapPin, MessageSquare, Users, TrendingUp, ArrowRight, Shield, Zap, LogIn, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 import NotificationBell from "@/components/NotificationBell";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Index = () => {
+  const { user, logout } = useAuth();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -18,15 +21,37 @@ const Index = () => {
               <Link to="/feed">Feed</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link to="/dashboard">Dashboard</Link>
-            </Button>
-            <Button variant="ghost" asChild>
               <Link to="/chatbot">AI Assistant</Link>
             </Button>
-            <Button variant="ghost" asChild>
-              <Link to="/profile">Profile</Link>
-            </Button>
-            <NotificationBell />
+            {user ? (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link to="/dashboard">Dashboard</Link>
+                </Button>
+                <Button variant="ghost" asChild>
+                  <Link to="/profile">Profile</Link>
+                </Button>
+                <NotificationBell />
+                <Button variant="outline" onClick={logout}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link to="/auth">
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Login
+                  </Link>
+                </Button>
+                <Button asChild>
+                  <Link to="/auth">
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Sign Up
+                  </Link>
+                </Button>
+              </>
+            )}
             <ThemeToggle />
             <Button asChild>
               <Link to="/report">Report Issue</Link>
