@@ -60,33 +60,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    try {
-      const response = await authAPI.login({ email, password });
-      const { user: userData, token: newToken } = response.data.data;
+    const response = await authAPI.login({ email, password });
+    const { user: userData, token: newToken } = response.data.data;
 
-      setUser(userData);
-      setToken(newToken);
+    setUser(userData);
+    setToken(newToken);
 
-      localStorage.setItem('token', newToken);
-      localStorage.setItem('user', JSON.stringify(userData));
-    } catch (error) {
-      throw error;
-    }
+    localStorage.setItem('token', newToken);
+    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const register = async (name: string, email: string, password: string, location?: string) => {
-    try {
-      const response = await authAPI.register({ name, email, password, location });
-      const { user: userData, token: newToken } = response.data.data;
+    const response = await authAPI.register({ name, email, password, location });
+    const { user: userData, token: newToken } = response.data.data;
 
-      setUser(userData);
-      setToken(newToken);
+    setUser(userData);
+    setToken(newToken);
 
-      localStorage.setItem('token', newToken);
-      localStorage.setItem('user', JSON.stringify(userData));
-    } catch (error) {
-      throw error;
-    }
+    localStorage.setItem('token', newToken);
+    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = () => {
@@ -97,15 +89,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const updateProfile = async (data: { name?: string; location?: string; bio?: string }) => {
-    try {
-      const response = await authAPI.updateProfile(data);
-      const updatedUser = response.data.data.user;
+    const response = await authAPI.updateProfile(data);
+    const updatedUser = response.data.data.user;
 
-      setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-    } catch (error) {
-      throw error;
-    }
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
   };
 
   const value: AuthContextType = {

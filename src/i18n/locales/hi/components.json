@@ -1,0 +1,79 @@
+{
+  "languageSwitcher": {
+    "selectLanguage": "भाषा चुनें",
+    "english": "English",
+    "hindi": "हिंदी"
+  },
+  "notificationBell": {
+    "notifications": "सूचनाएं",
+    "noNotifications": "कोई नई सूचना नहीं",
+    "markAsRead": "पढ़ा हुआ मार्क करें",
+    "viewAll": "सभी सूचनाएं देखें"
+  },
+  "themeToggle": {
+    "light": "लाइट",
+    "dark": "डार्क",
+    "system": "सिस्टम"
+  },
+  "toast": {
+    "success": "सफलता",
+    "error": "त्रुटि",
+    "warning": "चेतावनी",
+    "info": "जानकारी"
+  },
+  "form": {
+    "required": "आवश्यक",
+    "optional": "वैकल्पिक",
+    "placeholder": {
+      "email": "you@example.com",
+      "password": "अपना पासवर्ड दर्ज करें",
+      "name": "जॉन डो",
+      "location": "अपना शहर या क्षेत्र दर्ज करें",
+      "title": "उदा., मुख्य सड़क पर बड़ा गड्ढा",
+      "description": "मुद्दे का विस्तार से वर्णन करें...",
+      "search": "खोजें..."
+    }
+  },
+  "chart": {
+    "noData": "कोई डेटा उपलब्ध नहीं",
+    "loading": "चार्ट डेटा लोड हो रहा है..."
+  },
+  "table": {
+    "noData": "कोई डेटा नहीं मिला",
+    "loading": "लोड हो रहा है...",
+    "sort": "सॉर्ट करें",
+    "filter": "फिल्टर करें"
+  },
+  "modal": {
+    "confirm": "कन्फर्म करें",
+    "cancel": "रद्द करें",
+    "close": "बंद करें"
+  },
+  "pagination": {
+    "previous": "पिछला",
+    "next": "अगला",
+    "page": "पेज",
+    "of": "का",
+    "showing": "दिखा रहा है",
+    "to": "से",
+    "entries": "प्रविष्टियां"
+  },
+  "date": {
+    "today": "आज",
+    "yesterday": "कल",
+    "daysAgo": "{{count}} दिन पहले",
+    "hoursAgo": "{{count}} घंटे पहले",
+    "minutesAgo": "{{count}} मिनट पहले",
+    "justNow": "अभी अभी"
+  },
+  "timeAgo": {
+    "now": "अभी",
+    "minute": "मिनट",
+    "hour": "घंटा",
+    "day": "दिन",
+    "week": "सप्ताह",
+    "month": "महीना",
+    "year": "साल",
+    "ago": "पहले"
+  }
+}

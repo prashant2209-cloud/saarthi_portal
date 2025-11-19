@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, MapPin, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +16,7 @@ const Auth = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { login, register } = useAuth();
+  const { t } = useTranslation("pages");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,8 +30,9 @@ const Auth = () => {
     try {
       await login(email, password);
       navigate('/dashboard');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed');
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || 'Login failed');
     } finally {
       setIsLoading(false);
     }
@@ -49,8 +52,9 @@ const Auth = () => {
     try {
       await register(name, email, password, location);
       navigate('/dashboard');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed');
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || 'Registration failed');
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +65,7 @@ const Auth = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2">SAARTHI</h1>
-          <p className="text-muted-foreground">Your civic engagement platform</p>
+          <p className="text-muted-foreground">{t("auth.subtitle")}</p>
         </div>
 
         <Card className="p-6">
@@ -74,14 +78,14 @@ const Auth = () => {
 
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsTrigger value="login">{t("auth.login.title")}</TabsTrigger>
+              <TabsTrigger value="signup">{t("auth.signup.title")}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t("auth.login.email")}</Label>
                   <Input
                     id="email"
                     name="email"
@@ -91,7 +95,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t("auth.login.password")}</Label>
                   <div className="relative">
                     <Input
                       id="password"
@@ -116,7 +120,7 @@ const Auth = () => {
                   </div>
                 </div>
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Logging in..." : "Log In"}
+                  {isLoading ? t("auth.login.loading") : t("auth.login.submit")}
                 </Button>
               </form>
             </TabsContent>
@@ -124,7 +128,7 @@ const Auth = () => {
             <TabsContent value="signup">
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name">{t("auth.signup.name")}</Label>
                   <Input
                     id="name"
                     name="name"
@@ -134,7 +138,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                  <Label htmlFor="signup-email">{t("auth.signup.email")}</Label>
                   <Input
                     id="signup-email"
                     name="signup-email"
@@ -144,7 +148,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="location">Location</Label>
+                  <Label htmlFor="location">{t("auth.signup.location")}</Label>
                   <div className="relative">
                     <Input
                       id="location"
@@ -157,7 +161,7 @@ const Auth = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
+                  <Label htmlFor="signup-password">{t("auth.signup.password")}</Label>
                   <div className="relative">
                     <Input
                       id="signup-password"
@@ -182,18 +186,10 @@ const Auth = () => {
                   </div>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  By signing up, you agree to our{" "}
-                  <a href="#" className="text-primary hover:underline">
-                    Terms of Service
-                  </a>{" "}
-                  and{" "}
-                  <a href="#" className="text-primary hover:underline">
-                    Privacy Policy
-                  </a>
-                  .
+                  {t("auth.signup.terms")}
                 </div>
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Creating account..." : "Create Account"}
+                  {isLoading ? t("auth.signup.loading") : t("auth.signup.submit")}
                 </Button>
               </form>
             </TabsContent>
@@ -202,7 +198,7 @@ const Auth = () => {
 
         <div className="text-center mt-6">
           <Link to="/" className="text-sm text-muted-foreground hover:text-primary">
-            ← Back to home
+            ← {t("auth.backToHome")}
           </Link>
         </div>
       </div>

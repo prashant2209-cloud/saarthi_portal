@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Bot, Send, Lightbulb, HelpCircle, FileText, TrendingUp } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTranslation } from "react-i18next";
 
 interface Message {
   id: number;
@@ -17,17 +18,18 @@ interface Message {
 }
 
 const Chatbot = () => {
+  const { t } = useTranslation(["pages", "common"]);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       type: "bot",
-      content: "Hello! I'm your SAARTHI AI Assistant. I can help you with:\n\n• Filing civic complaints\n• Understanding issue categories\n• Checking complaint status\n• Getting civic information\n\nHow can I assist you today?",
+      content: t("chatbot.welcome.message"),
       timestamp: new Date().toLocaleTimeString(),
       suggestions: [
-        "How do I report an issue?",
-        "What are the issue categories?",
-        "Check my complaint status",
-        "Tips for effective reporting"
+        t("chatbot.suggestions.report"),
+        t("chatbot.suggestions.categories"),
+        t("chatbot.suggestions.status"),
+        t("chatbot.suggestions.tips")
       ]
     }
   ]);
@@ -44,13 +46,10 @@ const Chatbot = () => {
   }, [messages]);
 
   const quickResponses: Record<string, string> = {
-    "how do i report an issue": "To report an issue:\n\n1. Click the 'Report Issue' button\n2. Upload a photo of the problem\n3. Select the issue category\n4. Add your location (auto-detected or manual)\n5. Describe the issue in detail\n6. Submit your report\n\nOur AI will automatically categorize and prioritize your issue!",
-    
-    "what are the issue categories": "We handle various civic issues:\n\n🚗 Roads & Infrastructure\n🚮 Sanitation & Waste\n💡 Electricity & Streetlights\n💧 Water Supply\n🌳 Parks & Public Spaces\n🚨 Safety & Security\n🏢 Building & Construction\n📢 Noise Pollution\n\nSelect the most relevant category when reporting.",
-    
-    "check my complaint status": "To check your complaint status:\n\n1. Go to your Profile\n2. View 'My Issues' tab\n3. Click on any issue to see detailed status\n\nYou'll receive notifications for updates. Would you like me to show your recent issues?",
-    
-    "tips for effective reporting": "Here are tips for effective issue reporting:\n\n✅ Include clear photos\n✅ Provide exact location\n✅ Add detailed description\n✅ Select correct category\n✅ Mention urgency level\n✅ Add any safety concerns\n\nWell-documented issues get faster resolution!"
+    "how do i report an issue": t("chatbot.responses.report"),
+    "what are the issue categories": t("chatbot.responses.categories"),
+    "check my complaint status": t("chatbot.responses.status"),
+    "tips for effective reporting": t("chatbot.responses.tips")
   };
 
   const handleSend = () => {
@@ -70,7 +69,7 @@ const Chatbot = () => {
     // Simulate AI response
     setTimeout(() => {
       const lowerInput = input.toLowerCase();
-      let botResponse = "I understand you're asking about that. Let me help you!\n\nCould you provide more details or try asking:\n• How do I report an issue?\n• What are the issue categories?\n• Check my complaint status\n• Tips for effective reporting";
+      let botResponse = t("chatbot.responses.default");
 
       // Check for keyword matches
       for (const [key, value] of Object.entries(quickResponses)) {
@@ -85,9 +84,11 @@ const Chatbot = () => {
         type: "bot",
         content: botResponse,
         timestamp: new Date().toLocaleTimeString(),
-        suggestions: Object.keys(quickResponses).map(q => 
-          q.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-        ).slice(0, 3)
+        suggestions: [
+          t("chatbot.suggestions.report"),
+          t("chatbot.suggestions.categories"),
+          t("chatbot.suggestions.status")
+        ]
       };
 
       setMessages(prev => [...prev, botMessage]);
@@ -101,10 +102,10 @@ const Chatbot = () => {
   };
 
   const quickActions = [
-    { icon: FileText, label: "Report Issue", description: "File a new complaint" },
-    { icon: TrendingUp, label: "Issue Status", description: "Track your reports" },
-    { icon: HelpCircle, label: "Help Center", description: "Get assistance" },
-    { icon: Lightbulb, label: "Tips & Guides", description: "Best practices" }
+    { icon: FileText, label: t("chatbot.quickActions.reportIssue.label"), description: t("chatbot.quickActions.reportIssue.description") },
+    { icon: TrendingUp, label: t("chatbot.quickActions.issueStatus.label"), description: t("chatbot.quickActions.issueStatus.description") },
+    { icon: HelpCircle, label: t("chatbot.quickActions.helpCenter.label"), description: t("chatbot.quickActions.helpCenter.description") },
+    { icon: Lightbulb, label: t("chatbot.quickActions.tipsGuides.label"), description: t("chatbot.quickActions.tipsGuides.description") }
   ];
 
   return (
@@ -134,7 +135,7 @@ const Chatbot = () => {
           {/* Quick Actions Sidebar */}
           <Card className="lg:col-span-1 hidden lg:block">
             <CardHeader>
-              <CardTitle className="text-lg">Quick Actions</CardTitle>
+              <CardTitle className="text-lg">{t("chatbot.quickActions.title")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {quickActions.map((action, index) => {
@@ -142,6 +143,7 @@ const Chatbot = () => {
                 return (
                   <button
                     key={index}
+                    onClick={() => handleSuggestionClick(action.label)}
                     className="w-full p-3 rounded-lg border hover:bg-accent/5 transition-colors text-left flex items-start gap-3"
                   >
                     <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -167,8 +169,8 @@ const Chatbot = () => {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <CardTitle className="text-lg">SAARTHI AI Assistant</CardTitle>
-                  <Badge variant="secondary" className="text-xs">Always Available</Badge>
+                  <CardTitle className="text-lg">{t("chatbot.title")}</CardTitle>
+                  <Badge variant="secondary" className="text-xs">{t("chatbot.status")}</Badge>
                 </div>
               </div>
             </CardHeader>
@@ -244,7 +246,7 @@ const Chatbot = () => {
             <CardContent className="border-t p-4">
               <div className="flex gap-2">
                 <Input
-                  placeholder="Ask me anything about civic issues..."
+                  placeholder={t("chatbot.input.placeholder")}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSend()}

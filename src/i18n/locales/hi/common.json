@@ -1,0 +1,77 @@
+{
+  "navigation": {
+    "home": "होम",
+    "feed": "फीड",
+    "dashboard": "डैशबोर्ड",
+    "reportIssue": "मुद्दा रिपोर्ट करें",
+    "aiAssistant": "एआई असिस्टेंट",
+    "profile": "प्रोफाइल",
+    "login": "लॉग इन",
+    "signup": "साइन अप",
+    "logout": "लॉग आउट"
+  },
+  "buttons": {
+    "submit": "सबमिट करें",
+    "cancel": "रद्द करें",
+    "save": "सेव करें",
+    "edit": "एडिट करें",
+    "delete": "डिलीट करें",
+    "view": "देखें",
+    "back": "वापस",
+    "next": "अगला",
+    "previous": "पिछला",
+    "close": "बंद करें",
+    "open": "खोलें",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "confirm": "कन्फर्म करें",
+    "retry": "पुनः प्रयास करें",
+    "skip": "छोड़ें"
+  },
+  "status": {
+    "loading": "लोड हो रहा है...",
+    "success": "सफलता",
+    "error": "त्रुटि",
+    "warning": "चेतावनी",
+    "info": "जानकारी"
+  },
+  "messages": {
+    "noData": "कोई डेटा उपलब्ध नहीं",
+    "loadingFailed": "डेटा लोड करने में विफल",
+    "saveSuccess": "सफलतापूर्वक सेव किया गया",
+    "saveFailed": "सेव करने में विफल",
+    "deleteSuccess": "सफलतापूर्वक डिलीट किया गया",
+    "deleteFailed": "डिलीट करने में विफल",
+    "networkError": "नेटवर्क त्रुटि। कृपया पुनः प्रयास करें।",
+    "unauthorized": "आपको यह कार्य करने की अनुमति नहीं है",
+    "notFound": "अनुरोधित संसाधन नहीं मिला"
+  },
+  "validation": {
+    "required": "यह फ़ील्ड आवश्यक है",
+    "email": "कृपया एक वैध ईमेल पता दर्ज करें",
+    "minLength": "न्यूनतम लंबाई {{count}} वर्ण है",
+    "maxLength": "अधिकतम लंबाई {{count}} वर्ण है",
+    "invalidFormat": "अमान्य प्रारूप"
+  },
+  "categories": {
+    "roadsPotholes": "सड़कें और गड्ढे",
+    "waterSupply": "पानी की आपूर्ति",
+    "garbageSanitation": "कचरा और सफाई",
+    "streetLights": "स्ट्रीट लाइट",
+    "drainage": "नाली",
+    "publicSafety": "सार्वजनिक सुरक्षा",
+    "parksRecreation": "पार्क और मनोरंजन",
+    "other": "अन्य"
+  },
+  "priorities": {
+    "high": "उच्च",
+    "medium": "मध्यम",
+    "low": "निम्न"
+  },
+  "issueStatus": {
+    "pending": "लंबित",
+    "inProgress": "प्रगति में",
+    "resolved": "हल हो गया",
+    "rejected": "अस्वीकार किया गया"
+  }
+}

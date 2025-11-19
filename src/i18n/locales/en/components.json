@@ -1,0 +1,79 @@
+{
+  "languageSwitcher": {
+    "selectLanguage": "Select Language",
+    "english": "English",
+    "hindi": "हिंदी"
+  },
+  "notificationBell": {
+    "notifications": "Notifications",
+    "noNotifications": "No new notifications",
+    "markAsRead": "Mark as read",
+    "viewAll": "View all notifications"
+  },
+  "themeToggle": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "toast": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  "form": {
+    "required": "Required",
+    "optional": "Optional",
+    "placeholder": {
+      "email": "you@example.com",
+      "password": "Enter your password",
+      "name": "John Doe",
+      "location": "Enter your city or area",
+      "title": "e.g., Large pothole on Main Street",
+      "description": "Describe the issue in detail...",
+      "search": "Search..."
+    }
+  },
+  "chart": {
+    "noData": "No data available",
+    "loading": "Loading chart data..."
+  },
+  "table": {
+    "noData": "No data found",
+    "loading": "Loading...",
+    "sort": "Sort",
+    "filter": "Filter"
+  },
+  "modal": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "showing": "Showing",
+    "to": "to",
+    "entries": "entries"
+  },
+  "date": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "daysAgo": "{{count}} days ago",
+    "hoursAgo": "{{count}} hours ago",
+    "minutesAgo": "{{count}} minutes ago",
+    "justNow": "Just now"
+  },
+  "timeAgo": {
+    "now": "now",
+    "minute": "minute",
+    "hour": "hour",
+    "day": "day",
+    "week": "week",
+    "month": "month",
+    "year": "year",
+    "ago": "ago"
+  }
+}

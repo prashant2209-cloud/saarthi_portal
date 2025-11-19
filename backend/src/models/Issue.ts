@@ -147,7 +147,6 @@ const issueSchema = new Schema<IIssue>(
 
 // Indexes for better query performance
 issueSchema.index({ category: 1, status: 1 });
-issueSchema.index({ location: '2dsphere' }); // For geospatial queries
 issueSchema.index({ reportedBy: 1 });
 issueSchema.index({ createdAt: -1 });
 issueSchema.index({ 'metadata.lastActivity': -1 });

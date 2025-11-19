@@ -8,8 +8,10 @@ import { MapPin, ThumbsUp, MessageSquare, Clock, Search, Filter, TrendingUp } fr
 import { Link } from "react-router-dom";
 import NotificationBell from "@/components/NotificationBell";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTranslation } from "react-i18next";
 
 const Feed = () => {
+  const { t } = useTranslation(["pages", "common"]);
   const [activeTab, setActiveTab] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -88,18 +90,18 @@ const Feed = () => {
           </Link>
           <div className="flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/dashboard">{t("common:navigation.dashboard")}</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link to="/chatbot">AI Assistant</Link>
+              <Link to="/chatbot">{t("common:navigation.aiAssistant")}</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile">{t("common:navigation.profile")}</Link>
             </Button>
             <NotificationBell />
             <ThemeToggle />
             <Button asChild>
-              <Link to="/report">Report Issue</Link>
+              <Link to="/report">{t("common:navigation.reportIssue")}</Link>
             </Button>
           </div>
         </div>
@@ -110,9 +112,9 @@ const Feed = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold mb-1">Community Feed</h1>
+              <h1 className="text-3xl font-bold mb-1">{t("feed.title")}</h1>
               <p className="text-muted-foreground">
-                See what's happening in your neighborhood
+                {t("feed.subtitle")}
               </p>
             </div>
           </div>
@@ -124,24 +126,24 @@ const Feed = () => {
           {/* Sidebar */}
           <aside className="lg:col-span-1 space-y-4">
             <Card className="p-4">
-              <h3 className="font-semibold mb-4">Filters</h3>
+              <h3 className="font-semibold mb-4">{t("feed.filters.title")}</h3>
               <div className="space-y-3">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search issues..." className="pl-9" />
+                  <Input placeholder={t("feed.filters.searchPlaceholder")} className="pl-9" />
                 </div>
                 <Button variant="outline" className="w-full justify-start gap-2">
                   <Filter className="h-4 w-4" />
-                  More Filters
+                  {t("feed.filters.moreFilters")}
                 </Button>
               </div>
             </Card>
 
             <Card className="p-4">
-              <h3 className="font-semibold mb-4">Categories</h3>
+              <h3 className="font-semibold mb-4">{t("feed.categories.title")}</h3>
               {selectedCategory && (
                 <div className="mb-3 p-2 bg-primary/10 rounded-lg">
-                  <p className="text-sm font-medium">Filtered by: {selectedCategory}</p>
+                  <p className="text-sm font-medium">{t("feed.categories.filteredBy")}: {selectedCategory}</p>
                 </div>
               )}
               <div className="space-y-2">
@@ -170,7 +172,7 @@ const Feed = () => {
                     onClick={() => setSelectedCategory(null)}
                     className="w-full text-left px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted transition-colors"
                   >
-                    Clear Filter
+                    {t("feed.categories.clearFilter")}
                   </button>
                 )}
               </div>
@@ -181,10 +183,10 @@ const Feed = () => {
           <main className="lg:col-span-3 space-y-6">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="all">All Issues</TabsTrigger>
-                <TabsTrigger value="pending">Pending</TabsTrigger>
-                <TabsTrigger value="progress">In Progress</TabsTrigger>
-                <TabsTrigger value="resolved">Resolved</TabsTrigger>
+                <TabsTrigger value="all">{t("feed.tabs.all")}</TabsTrigger>
+                <TabsTrigger value="pending">{t("feed.tabs.pending")}</TabsTrigger>
+                <TabsTrigger value="progress">{t("feed.tabs.inProgress")}</TabsTrigger>
+                <TabsTrigger value="resolved">{t("feed.tabs.resolved")}</TabsTrigger>
               </TabsList>
 
               <TabsContent value={activeTab} className="space-y-4 mt-6">
@@ -252,7 +254,7 @@ const Feed = () => {
                             {issue.comments}
                           </Button>
                           <Button variant="outline" size="sm" className="ml-auto">
-                            View Details
+                            {t("feed.issue.viewDetails")}
                           </Button>
                         </div>
                       </div>

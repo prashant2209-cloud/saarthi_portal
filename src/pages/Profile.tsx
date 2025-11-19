@@ -6,8 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Trophy, Award, Star, TrendingUp, MapPin, Calendar } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
+  const { t } = useTranslation(["pages", "common"]);
   // Mock user data - will be replaced with API
   const user = {
     name: "Rahul Sharma",
@@ -109,15 +111,15 @@ const Profile = () => {
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="h-4 w-4" />
-                    Joined {user.joinDate}
+                    {t("profile.joined")} {user.joinDate}
                   </div>
                 </div>
               </div>
 
               <div className="text-center">
                 <div className="text-4xl font-bold text-primary mb-1">{user.points}</div>
-                <p className="text-sm text-muted-foreground">Civic Points</p>
-                <Badge variant="secondary" className="mt-2">Rank #{user.rank}</Badge>
+                <p className="text-sm text-muted-foreground">{t("profile.civicPoints")}</p>
+                <Badge variant="secondary" className="mt-2">{t("profile.rank")} #{user.rank}</Badge>
               </div>
             </div>
           </CardContent>
@@ -128,25 +130,25 @@ const Profile = () => {
           <Card>
             <CardContent className="pt-6 text-center">
               <div className="text-3xl font-bold text-primary mb-1">{user.stats.issuesReported}</div>
-              <p className="text-sm text-muted-foreground">Issues Reported</p>
+              <p className="text-sm text-muted-foreground">{t("profile.stats.issuesReported")}</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6 text-center">
               <div className="text-3xl font-bold text-success mb-1">{user.stats.issuesResolved}</div>
-              <p className="text-sm text-muted-foreground">Issues Resolved</p>
+              <p className="text-sm text-muted-foreground">{t("profile.stats.issuesResolved")}</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6 text-center">
               <div className="text-3xl font-bold text-accent mb-1">{user.stats.upvotesReceived}</div>
-              <p className="text-sm text-muted-foreground">Upvotes Received</p>
+              <p className="text-sm text-muted-foreground">{t("profile.stats.upvotesReceived")}</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="pt-6 text-center">
               <div className="text-3xl font-bold text-info mb-1">{user.stats.commentsPosted}</div>
-              <p className="text-sm text-muted-foreground">Comments Posted</p>
+              <p className="text-sm text-muted-foreground">{t("profile.stats.commentsPosted")}</p>
             </CardContent>
           </Card>
         </div>
@@ -154,14 +156,14 @@ const Profile = () => {
         {/* Tabs */}
         <Tabs defaultValue="activity" className="space-y-6">
           <TabsList className="grid w-full max-w-md grid-cols-2">
-            <TabsTrigger value="activity">Activity</TabsTrigger>
-            <TabsTrigger value="badges">Badges</TabsTrigger>
+            <TabsTrigger value="activity">{t("profile.tabs.activity")}</TabsTrigger>
+            <TabsTrigger value="badges">{t("profile.tabs.badges")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="activity" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
+                <CardTitle>{t("profile.activity.title")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -170,9 +172,9 @@ const Profile = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <Badge variant="outline" className="text-xs">
-                            {activity.type === "reported" && "Reported"}
-                            {activity.type === "commented" && "Commented"}
-                            {activity.type === "upvoted" && "Upvoted"}
+                            {activity.type === "reported" && t("profile.activity.types.reported")}
+                            {activity.type === "commented" && t("profile.activity.types.commented")}
+                            {activity.type === "upvoted" && t("profile.activity.types.upvoted")}
                           </Badge>
                           <span className="text-xs text-muted-foreground">{activity.date}</span>
                         </div>
@@ -181,7 +183,7 @@ const Profile = () => {
                         </Link>
                         <div className="flex items-center gap-3 mt-2">
                           <Badge className={getStatusColor(activity.status)}>{activity.status}</Badge>
-                          <span className="text-sm text-muted-foreground">{activity.upvotes} upvotes</span>
+                          <span className="text-sm text-muted-foreground">{activity.upvotes} {t("profile.activity.upvotes")}</span>
                         </div>
                       </div>
                     </div>
@@ -194,7 +196,7 @@ const Profile = () => {
           <TabsContent value="badges" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Achievements & Badges</CardTitle>
+                <CardTitle>{t("profile.badges.title")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -216,7 +218,7 @@ const Profile = () => {
                           <h3 className="font-semibold mb-1">{badge.name}</h3>
                           <p className="text-sm text-muted-foreground">{badge.description}</p>
                           {badge.earned && (
-                            <Badge variant="secondary" className="mt-2 text-xs">Earned</Badge>
+                            <Badge variant="secondary" className="mt-2 text-xs">{t("profile.badges.earned")}</Badge>
                           )}
                         </div>
                       </div>

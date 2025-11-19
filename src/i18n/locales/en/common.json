@@ -1,0 +1,77 @@
+{
+  "navigation": {
+    "home": "Home",
+    "feed": "Feed",
+    "dashboard": "Dashboard",
+    "reportIssue": "Report Issue",
+    "aiAssistant": "AI Assistant",
+    "profile": "Profile",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout"
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "retry": "Retry",
+    "skip": "Skip"
+  },
+  "status": {
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Information"
+  },
+  "messages": {
+    "noData": "No data available",
+    "loadingFailed": "Failed to load data",
+    "saveSuccess": "Saved successfully",
+    "saveFailed": "Failed to save",
+    "deleteSuccess": "Deleted successfully",
+    "deleteFailed": "Failed to delete",
+    "networkError": "Network error. Please try again.",
+    "unauthorized": "You are not authorized to perform this action",
+    "notFound": "The requested resource was not found"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "minLength": "Minimum length is {{count}} characters",
+    "maxLength": "Maximum length is {{count}} characters",
+    "invalidFormat": "Invalid format"
+  },
+  "categories": {
+    "roadsPotholes": "Roads & Potholes",
+    "waterSupply": "Water Supply",
+    "garbageSanitation": "Garbage & Sanitation",
+    "streetLights": "Street Lights",
+    "drainage": "Drainage",
+    "publicSafety": "Public Safety",
+    "parksRecreation": "Parks & Recreation",
+    "other": "Other"
+  },
+  "priorities": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "issueStatus": {
+    "pending": "Pending",
+    "inProgress": "In Progress",
+    "resolved": "Resolved",
+    "rejected": "Rejected"
+  }
+}

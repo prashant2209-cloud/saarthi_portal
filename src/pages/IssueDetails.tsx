@@ -9,8 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, MapPin, Calendar, ThumbsUp, MessageSquare, Share2, AlertCircle, CheckCircle, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTranslation } from "react-i18next";
 
 const IssueDetails = () => {
+  const { t } = useTranslation(["pages", "common"]);
   const { id } = useParams();
   const navigate = useNavigate();
   const [comment, setComment] = useState("");
@@ -119,7 +121,7 @@ const IssueDetails = () => {
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          {t("common:navigation.back")}
         </Button>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -132,7 +134,7 @@ const IssueDetails = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge variant="outline">{issue.category}</Badge>
-                      <Badge variant={getPriorityColor(issue.priority)}>{issue.priority} Priority</Badge>
+                      <Badge variant={getPriorityColor(issue.priority)}>{issue.priority} {t("issueDetails.priority")}</Badge>
                     </div>
                     <CardTitle className="text-3xl mb-2">{issue.title}</CardTitle>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -170,7 +172,7 @@ const IssueDetails = () => {
                   </Button>
                   <Button variant="outline" onClick={handleShare} className="flex items-center gap-2">
                     <Share2 className="h-4 w-4" />
-                    Share
+                    {t("issueDetails.share")}
                   </Button>
                 </div>
 
@@ -178,7 +180,7 @@ const IssueDetails = () => {
 
                 {/* Description */}
                 <div>
-                  <h3 className="text-lg font-semibold mb-2">Description</h3>
+                  <h3 className="text-lg font-semibold mb-2">{t("issueDetails.description")}</h3>
                   <p className="text-muted-foreground leading-relaxed">{issue.description}</p>
                 </div>
 
@@ -186,7 +188,7 @@ const IssueDetails = () => {
 
                 {/* Comments Section */}
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">Comments ({issue.comments.length})</h3>
+                  <h3 className="text-lg font-semibold mb-4">{t("issueDetails.comments.title")} ({issue.comments.length})</h3>
                   <div className="space-y-4 mb-6">
                     {issue.comments.map((comment) => (
                       <div key={comment.id} className="flex gap-3">
@@ -198,7 +200,7 @@ const IssueDetails = () => {
                           <div className="flex items-center gap-2 mb-1">
                             <span className="font-semibold">{comment.user}</span>
                             {comment.isOfficial && (
-                              <Badge variant="secondary" className="text-xs">Official</Badge>
+                              <Badge variant="secondary" className="text-xs">{t("issueDetails.comments.official")}</Badge>
                             )}
                             <span className="text-xs text-muted-foreground">{comment.timestamp}</span>
                           </div>
@@ -211,12 +213,12 @@ const IssueDetails = () => {
                   {/* Add Comment */}
                   <div className="space-y-3">
                     <Textarea
-                      placeholder="Add a comment..."
+                      placeholder={t("issueDetails.comments.placeholder")}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
                       rows={3}
                     />
-                    <Button onClick={handleComment}>Post Comment</Button>
+                    <Button onClick={handleComment}>{t("issueDetails.comments.postButton")}</Button>
                   </div>
                 </div>
               </CardContent>
@@ -228,7 +230,7 @@ const IssueDetails = () => {
             {/* Reporter Info */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm">Reported By</CardTitle>
+                <CardTitle className="text-sm">{t("issueDetails.reporter.title")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-3 mb-4">
@@ -238,11 +240,11 @@ const IssueDetails = () => {
                   </Avatar>
                   <div>
                     <p className="font-semibold">{issue.reportedBy.name}</p>
-                    <p className="text-xs text-muted-foreground">{issue.reportedBy.points} civic points</p>
+                    <p className="text-xs text-muted-foreground">{issue.reportedBy.points} {t("issueDetails.reporter.points")}</p>
                   </div>
                 </div>
                 <Button variant="outline" className="w-full" asChild>
-                  <Link to={`/profile/${issue.reportedBy.name}`}>View Profile</Link>
+                  <Link to={`/profile/${issue.reportedBy.name}`}>{t("issueDetails.reporter.viewProfile")}</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -250,18 +252,18 @@ const IssueDetails = () => {
             {/* Assignment Info */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm">Assigned To</CardTitle>
+                <CardTitle className="text-sm">{t("issueDetails.assignment.title")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm font-medium">{issue.assignedTo}</p>
-                <p className="text-xs text-muted-foreground mt-1">Last updated: {issue.updatedAt}</p>
+                <p className="text-xs text-muted-foreground mt-1">{t("issueDetails.assignment.lastUpdated")}: {issue.updatedAt}</p>
               </CardContent>
             </Card>
 
             {/* Timeline */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm">Resolution Timeline</CardTitle>
+                <CardTitle className="text-sm">{t("issueDetails.timeline.title")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">

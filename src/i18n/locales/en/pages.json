@@ -1,0 +1,275 @@
+{
+  "index": {
+    "hero": {
+      "title": "Your Voice, Your Community",
+      "badge": "AI-Powered Civic Engagement",
+      "subtitle": "Report civic issues, collaborate with your community, and track real-time solutions. SAARTHI bridges citizens and local authorities for a better tomorrow.",
+      "ctaPrimary": "Report an Issue",
+      "ctaSecondary": "Explore Community Feed"
+    },
+    "stats": {
+      "issuesReported": "Issues Reported",
+      "issuesResolved": "Issues Resolved",
+      "activeCitizens": "Active Citizens",
+      "responseRate": "Response Rate"
+    },
+    "features": {
+      "title": "How SAARTHI Works",
+      "subtitle": "A simple, powerful platform connecting communities with local authorities",
+      "smartReporting": {
+        "title": "Smart Reporting",
+        "description": "Upload images, add location with GPS, and let AI categorize your civic issues automatically."
+      },
+      "communityPower": {
+        "title": "Community Power",
+        "description": "Upvote, comment, and collaborate on issues. Your collective voice drives faster action."
+      },
+      "realTimeUpdates": {
+        "title": "Real-Time Updates",
+        "description": "Track your complaint status, get notifications, and see transparent progress updates."
+      }
+    },
+    "testimonials": {
+      "title": "What Our Community Says",
+      "subtitle": "Real stories from citizens making a difference",
+      "items": [
+        {
+          "name": "Priya Sharma",
+          "location": "Delhi",
+          "content": "SAARTHI helped me get the street lights fixed in my neighborhood within a week. The community support and real-time updates made all the difference.",
+          "role": "Community Member"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "location": "Mumbai",
+          "content": "As a busy professional, I never had time to follow up on civic issues. SAARTHI's platform made it easy to report and track progress.",
+          "role": "Business Owner"
+        },
+        {
+          "name": "Anjali Patel",
+          "location": "Ahmedabad",
+          "content": "The AI categorization saved me so much time. I reported a drainage issue and it was resolved within 48 hours thanks to community collaboration.",
+          "role": "Teacher"
+        },
+        {
+          "name": "Vikram Singh",
+          "location": "Jaipur",
+          "content": "SAARTHI has transformed how our community addresses civic problems. The transparency and community engagement is incredible.",
+          "role": "Local Activist"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to Make a Difference?",
+      "subtitle": "Join thousands of citizens making their communities better, one report at a time.",
+      "ctaPrimary": "Get Started Free",
+      "ctaSecondary": "Learn More"
+    },
+    "footer": {
+      "description": "Empowering communities through technology and transparency.",
+      "platform": "Platform",
+      "resources": "Resources",
+      "legal": "Legal",
+      "trackStatus": "Track Status",
+      "helpCenter": "Help Center",
+      "guidelines": "Guidelines",
+      "apiDocs": "API Docs",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "contact": "Contact",
+      "copyright": "© 2025 SAARTHI. Building better communities together."
+    }
+  },
+  "auth": {
+    "title": "SAARTHI",
+    "subtitle": "Your civic engagement platform",
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log In",
+      "loading": "Logging in..."
+    },
+    "signup": {
+      "title": "Sign Up",
+      "name": "Full Name",
+      "email": "Email",
+      "location": "Location",
+      "password": "Password",
+      "submit": "Create Account",
+      "loading": "Creating account...",
+      "terms": "By signing up, you agree to our Terms of Service and Privacy Policy."
+    },
+    "backToHome": "← Back to home"
+  },
+  "dashboard": {
+    "title": "Community Dashboard",
+    "subtitle": "Real-time insights into civic engagement and issue resolution",
+    "kpis": {
+      "totalIssues": "Total Issues",
+      "resolutionRate": "Resolution Rate",
+      "avgResponseTime": "Avg Response Time",
+      "activeCitizens": "Active Citizens"
+    },
+    "tabs": {
+      "trends": "Issue Trends",
+      "categories": "Categories",
+      "status": "Status Overview",
+      "leaderboard": "Leaderboard"
+    },
+    "charts": {
+      "monthlyTrends": "Monthly Issue Trends",
+      "resolutionProgress": "Resolution Progress",
+      "issuesByCategory": "Issues by Category",
+      "priorityDistribution": "Priority Distribution",
+      "issueStatusOverview": "Issue Status Overview",
+      "topContributors": "Top Contributors",
+      "recentActivity": "Recent Activity"
+    },
+    "activity": {
+      "reported": "Reported",
+      "commented": "Commented",
+      "upvoted": "Upvoted",
+      "points": "points"
+    }
+  },
+  "reportIssue": {
+    "title": "Report an Issue",
+    "subtitle": "Help improve your community by reporting civic issues. Your voice matters.",
+    "form": {
+      "title": "Issue Title",
+      "category": "Category",
+      "description": "Description",
+      "location": "Location",
+      "uploadPhoto": "Upload Photo",
+      "useGPS": "Use GPS",
+      "priorityAssessment": "Priority Assessment",
+      "priorityDescription": "Our AI will automatically categorize and prioritize your issue based on severity and community impact.",
+      "submit": "Submit Report",
+      "saveDraft": "Save Draft"
+    },
+    "tips": {
+      "title": "Tips for Better Reports",
+      "tip1": "Take clear photos showing the issue from multiple angles",
+      "tip2": "Provide specific location details (street name, landmarks)",
+      "tip3": "Describe the impact on your community",
+      "tip4": "Check if a similar issue has already been reported"
+    }
+  },
+  "feed": {
+    "title": "Community Feed",
+    "subtitle": "See what's happening in your neighborhood",
+    "filters": "Filters",
+    "search": "Search issues...",
+    "categories": "Categories",
+    "clearFilter": "Clear Filter",
+    "tabs": {
+      "all": "All Issues",
+      "pending": "Pending",
+      "progress": "In Progress",
+      "resolved": "Resolved"
+    },
+    "actions": {
+      "upvote": "Upvote",
+      "comments": "Comments",
+      "viewDetails": "View Details"
+    }
+  },
+  "chatbot": {
+    "title": "SAARTHI AI Assistant",
+    "subtitle": "Always Available",
+    "welcome": "Hello! I'm your SAARTHI AI Assistant. I can help you with:\n\n• Filing civic complaints\n• Understanding issue categories\n• Checking complaint status\n• Getting civic information\n\nHow can I assist you today?",
+    "suggestions": [
+      "How do I report an issue?",
+      "What are the issue categories?",
+      "Check my complaint status",
+      "Tips for effective reporting"
+    ],
+    "quickActions": {
+      "title": "Quick Actions",
+      "reportIssue": {
+        "label": "Report Issue",
+        "description": "File a new complaint"
+      },
+      "issueStatus": {
+        "label": "Issue Status",
+        "description": "Track your reports"
+      },
+      "helpCenter": {
+        "label": "Help Center",
+        "description": "Get assistance"
+      },
+      "tipsGuides": {
+        "label": "Tips & Guides",
+        "description": "Best practices"
+      }
+    },
+    "input": "Ask me anything about civic issues...",
+    "typing": "Typing..."
+  },
+  "profile": {
+    "stats": {
+      "issuesReported": "Issues Reported",
+      "issuesResolved": "Issues Resolved",
+      "upvotesReceived": "Upvotes Received",
+      "commentsPosted": "Comments Posted",
+      "civicPoints": "Civic Points"
+    },
+    "tabs": {
+      "activity": "Activity",
+      "badges": "Badges"
+    },
+    "badges": {
+      "earlyReporter": {
+        "name": "Early Reporter",
+        "description": "Filed first issue"
+      },
+      "communityHero": {
+        "name": "Community Hero",
+        "description": "100+ upvotes received"
+      },
+      "activeCitizen": {
+        "name": "Active Citizen",
+        "description": "10 issues resolved"
+      },
+      "topContributor": {
+        "name": "Top Contributor",
+        "description": "Top 50 in leaderboard"
+      },
+      "civicChampion": {
+        "name": "Civic Champion",
+        "description": "500+ points earned"
+      },
+      "earned": "Earned"
+    },
+    "activity": {
+      "recentActivity": "Recent Activity",
+      "viewProfile": "View Profile"
+    }
+  },
+  "issueDetails": {
+    "reportedBy": "Reported By",
+    "assignedTo": "Assigned To",
+    "resolutionTimeline": "Resolution Timeline",
+    "description": "Description",
+    "comments": "Comments",
+    "addComment": "Add a comment...",
+    "postComment": "Post Comment",
+    "actions": {
+      "upvote": "Upvote",
+      "comment": "Comment",
+      "share": "Share"
+    },
+    "timeline": {
+      "reported": "Reported",
+      "acknowledged": "Acknowledged",
+      "underReview": "Under Review",
+      "inProgress": "In Progress"
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "backToHome": "Return to Home"
+  }
+}

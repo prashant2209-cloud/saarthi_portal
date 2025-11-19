@@ -37,9 +37,11 @@ import {
   Zap
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
   const [timeRange, setTimeRange] = useState("30d");
+  const { t } = useTranslation(["pages", "common"]);
 
   // Mock data for analytics
   const issueTrends = [
@@ -144,10 +146,10 @@ const Dashboard = () => {
           </Link>
           <div className="flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link to="/feed">Feed</Link>
+              <Link to="/feed">{t("common:navigation.feed")}</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link to="/report">Report Issue</Link>
+              <Link to="/report">{t("common:navigation.reportIssue")}</Link>
             </Button>
             <ThemeToggle />
           </div>
@@ -157,9 +159,9 @@ const Dashboard = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Community Dashboard</h1>
+            <h1 className="text-4xl font-bold mb-2">{t("dashboard.title")}</h1>
             <p className="text-muted-foreground">
-              Real-time insights into civic engagement and issue resolution
+              {t("dashboard.subtitle")}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -182,7 +184,7 @@ const Dashboard = () => {
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">{kpi.title}</p>
+                      <p className="text-sm font-medium text-muted-foreground">{t(`dashboard.kpis.${Object.keys(t("dashboard.kpis", { returnObjects: true }))[index]}`)}</p>
                       <p className="text-3xl font-bold">{kpi.value}</p>
                       <p className="text-xs text-green-600 flex items-center mt-1">
                         <TrendingUp className="h-3 w-3 mr-1" />
@@ -200,10 +202,10 @@ const Dashboard = () => {
         {/* Charts Section */}
         <Tabs defaultValue="trends" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="trends">Issue Trends</TabsTrigger>
-            <TabsTrigger value="categories">Categories</TabsTrigger>
-            <TabsTrigger value="status">Status Overview</TabsTrigger>
-            <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
+            <TabsTrigger value="trends">{t("dashboard.tabs.trends")}</TabsTrigger>
+            <TabsTrigger value="categories">{t("dashboard.tabs.categories")}</TabsTrigger>
+            <TabsTrigger value="status">{t("dashboard.tabs.status")}</TabsTrigger>
+            <TabsTrigger value="leaderboard">{t("dashboard.tabs.leaderboard")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="trends" className="space-y-6">
@@ -212,7 +214,7 @@ const Dashboard = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <BarChart3 className="h-5 w-5" />
-                    Monthly Issue Trends
+                    {t("dashboard.charts.monthlyTrends")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -247,7 +249,7 @@ const Dashboard = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Activity className="h-5 w-5" />
-                    Resolution Progress
+                    {t("dashboard.charts.resolutionProgress")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -283,7 +285,7 @@ const Dashboard = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <PieChartIcon className="h-5 w-5" />
-                    Issues by Category
+                    {t("dashboard.charts.issuesByCategory")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -313,7 +315,7 @@ const Dashboard = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Target className="h-5 w-5" />
-                    Priority Distribution
+                    {t("dashboard.charts.priorityDistribution")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -336,7 +338,7 @@ const Dashboard = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5" />
-                  Issue Status Overview
+                  {t("dashboard.charts.issueStatusOverview")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -359,7 +361,7 @@ const Dashboard = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Award className="h-5 w-5" />
-                    Top Contributors
+                    {t("dashboard.charts.topContributors")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -372,14 +374,14 @@ const Dashboard = () => {
                           </div>
                           <div>
                             <p className="font-semibold">{contributor.name}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {contributor.issues} issues reported
+                          <p className="text-sm text-muted-foreground">
+                              {contributor.issues} {t("dashboard.activity.issuesReported")}
                             </p>
                           </div>
                         </div>
                         <div className="text-right">
                           <p className="font-bold text-primary">{contributor.points}</p>
-                          <p className="text-xs text-muted-foreground">points</p>
+                          <p className="text-xs text-muted-foreground">{t("dashboard.activity.points")}</p>
                         </div>
                       </div>
                     ))}
@@ -391,7 +393,7 @@ const Dashboard = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Zap className="h-5 w-5" />
-                    Recent Activity
+                    {t("dashboard.charts.recentActivity")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
