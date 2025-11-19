@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,14 +34,41 @@ import {
   BarChart3,
   PieChart as PieChartIcon,
   Calendar,
-  Zap
+  Zap,
+  Download
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTranslation } from "react-i18next";
+import { generateDashboardPDF, generateDashboardPDFWithCharts, DashboardData } from "@/utils/pdfGenerator";
 
 const Dashboard = () => {
   const [timeRange, setTimeRange] = useState("30d");
+  const dashboardRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation(["pages", "common"]);
+
+  const handleExportPDF = async () => {
+    if (!dashboardRef.current) return;
+
+    const dashboardData: DashboardData = {
+      kpis: {
+        totalIssues: kpis[0].value,
+        resolutionRate: kpis[1].value,
+        avgResponseTime: kpis[2].value,
+        activeCitizens: kpis[3].value,
+      },
+      issueTrends,
+      categoryData,
+      statusData,
+      topContributors,
+      recentActivity,
+    };
+
+    try {
+      await generateDashboardPDFWithCharts(dashboardRef.current, dashboardData, t);
+    } catch (error) {
+      console.error('PDF export failed:', error);
+    }
+  };
 
   // Mock data for analytics
   const issueTrends = [
@@ -137,7 +164,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div ref={dashboardRef} className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -169,7 +196,8 @@ const Dashboard = () => {
               <Calendar className="h-4 w-4 mr-2" />
               Last 30 days
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={handleExportPDF}>
+              <Download className="h-4 w-4 mr-2" />
               Export Report
             </Button>
           </div>
