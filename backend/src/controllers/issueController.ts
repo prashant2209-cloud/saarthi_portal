@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { body, param, query, validationResult } from 'express-validator';
 import Issue from '../models/Issue';
-import User from '../models/User';
+import User, { IUser } from '../models/User';
 import Comment from '../models/Comment';
 
 interface AuthRequest extends Request {
-  user?: any;
+  user?: IUser;
 }
 
 // @desc    Get all issues with filtering and pagination
@@ -22,7 +22,7 @@ export const getIssues = async (
     const startIndex = (page - 1) * limit;
 
     // Build query
-    let query: any = {};
+    const query: any = {};
 
     // Filter by category
     if (req.query.category) {
@@ -53,7 +53,7 @@ export const getIssues = async (
     }
 
     // Sort options
-    let sortOptions: any = { createdAt: -1 }; // Default: newest first
+    let sortOptions: Record<string, any> = { createdAt: -1 }; // Default: newest first
     if (req.query.sort === 'oldest') {
       sortOptions = { createdAt: 1 };
     } else if (req.query.sort === 'popular') {

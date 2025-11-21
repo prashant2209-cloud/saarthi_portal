@@ -58,6 +58,35 @@ Transform the SAARTHI civic engagement platform into a multi-lingual website sup
 - [x] Add testimonials translations to en/pages.json and hi/pages.json
 - [x] Implement grid layout for 3-4 user testimonials
 
+## Code Quality Fixes
+
+### Backend Lint Issues
+- [ ] Fix `any` types in controllers (authController.ts, issueController.ts, commentController.ts)
+  - [ ] Update authController.ts: Remove `(user._id as any)`, ensure IUser typing
+  - [ ] Update issueController.ts: Replace `query: any` with `Partial<IssueQuery>`, `sortOptions` with `SortOptions`
+  - [ ] Update commentController.ts: Change `user?: any` to `user?: IUser`
+- [ ] Fix `any` types in middleware (auth.ts, errorHandler.ts)
+  - [ ] Update auth.ts: Type `decoded` as `JWTPayload`
+  - [ ] Update errorHandler.ts: Type errors properly, use `unknown` for values
+- [ ] Fix `any` types in models (User.ts) - No changes needed
+- [ ] Fix `any` types in utils (jwt.ts)
+  - [ ] Remove `(jwt.sign as any)`
+- [ ] Define proper interfaces for JWT payload and user objects - Create backend/src/types/index.ts
+- [ ] Replace empty object types `{}` with `object` or specific types in models - No changes needed
+- [ ] Run ESLint verification: cd backend && npx eslint src/**/*.ts
+- [ ] Test backend functionality
+
+### Frontend Lint Issues
+- [ ] Remove empty interfaces in UI components (command.tsx, textarea.tsx)
+- [ ] Fix `any` types in pdfGenerator.ts and Index.tsx
+- [ ] Replace `require()` with ES6 import in tailwind.config.ts
+- [ ] Address fast refresh warnings by separating exports
+
+### Runtime Fixes
+- [ ] Ensure MongoDB connection and proper .env configuration
+- [ ] Fix health endpoint 403 issue (check CORS or middleware)
+- [ ] Test full application with backend and frontend running
+
 ## Supported Languages (Initial)
 - English (en) - Default
 - Hindi (hi) - Primary Indian language

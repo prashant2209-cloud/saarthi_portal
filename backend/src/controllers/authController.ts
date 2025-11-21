@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { body, validationResult } from 'express-validator';
-import User from '../models/User';
+import User, { IUser } from '../models/User';
 import { generateToken } from '../utils/jwt';
 
 interface AuthRequest extends Request {
-  user?: any;
+  user?: IUser;
 }
 
 // @desc    Register user
@@ -49,7 +49,7 @@ export const register = async (
 
     // Generate token
     const token = generateToken({
-      id: (user._id as any).toString(),
+      id: user._id.toString(),
       email: user.email,
       role: user.role,
     });
@@ -212,7 +212,7 @@ export const updateProfile = async (
       message: 'Profile updated successfully',
       data: {
         user: {
-          id: user!._id,
+          id: user!._id.toString(),
           name: user!.name,
           email: user!.email,
           avatar: user!.avatar,

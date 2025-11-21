@@ -40,7 +40,7 @@ export const protect = async (
       const decoded = jwt.verify(
         token,
         process.env.JWT_SECRET || 'fallback_secret'
-      ) as any;
+      ) as JwtPayload;
 
       req.user = await User.findById(decoded.id);
 
