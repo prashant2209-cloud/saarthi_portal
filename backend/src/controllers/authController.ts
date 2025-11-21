@@ -59,7 +59,7 @@ export const register = async (
       message: 'User registered successfully',
       data: {
         user: {
-          id: user._id,
+          id: user._id.toString(),
           name: user.name,
           email: user.email,
           avatar: user.avatar,
@@ -98,7 +98,7 @@ export const login = async (
     const { email, password } = req.body;
 
     // Check for user
-    const user = await User.findOne({ email }).select('+password');
+    const user: IUser = await User.findOne({ email }).select('+password')!;
     if (!user) {
       res.status(401).json({
         success: false,
@@ -119,7 +119,7 @@ export const login = async (
 
     // Generate token
     const token = generateToken({
-      id: (user._id as any).toString(),
+      id: user._id.toString(),
       email: user.email,
       role: user.role,
     });
@@ -129,7 +129,7 @@ export const login = async (
       message: 'Login successful',
       data: {
         user: {
-          id: user._id,
+          id: user._id.toString(),
           name: user.name,
           email: user.email,
           avatar: user.avatar,
@@ -155,13 +155,13 @@ export const getMe = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user!._id);
 
     res.status(200).json({
       success: true,
       data: {
         user: {
-          id: user!._id,
+          id: user!._id!.toString(),
           name: user!.name,
           email: user!.email,
           avatar: user!.avatar,
@@ -202,7 +202,7 @@ export const updateProfile = async (
     const { name, location, bio } = req.body;
 
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      req.user!._id,
       { name, location, bio },
       { new: true, runValidators: true }
     );
@@ -212,7 +212,7 @@ export const updateProfile = async (
       message: 'Profile updated successfully',
       data: {
         user: {
-          id: user!._id.toString(),
+          id: user!._id!.toString(),
           name: user!.name,
           email: user!.email,
           avatar: user!.avatar,

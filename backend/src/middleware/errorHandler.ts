@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 interface CustomError extends Error {
   statusCode?: number;
   code?: number;
-  errors?: any;
+  errors?: Array<{ message: string }>;
 }
 
 export const errorHandler = (
@@ -33,7 +33,7 @@ export const errorHandler = (
   // Mongoose validation error
   if (err.name === 'ValidationError') {
     const message = Object.values(err.errors || {})
-      .map((val: any) => val.message)
+      .map((val: { message: string }) => val.message)
       .join(', ');
     error = { ...error, message, statusCode: 400 };
   }

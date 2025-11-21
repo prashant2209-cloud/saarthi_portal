@@ -2,10 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import Comment from '../models/Comment';
 import Issue from '../models/Issue';
-import User from '../models/User';
+import User, { IUser } from '../models/User';
 
 interface AuthRequest extends Request {
-  user?: any;
+  user?: IUser;
 }
 
 // @desc    Get comments for an issue

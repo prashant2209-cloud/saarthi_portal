@@ -35,7 +35,7 @@ export interface DashboardData {
   }>;
 }
 
-export const generateDashboardPDF = async (data: DashboardData, t: any): Promise<void> => {
+export const generateDashboardPDF = async (data: DashboardData, t: (key: string) => string): Promise<void> => {
   const pdf = new jsPDF('p', 'mm', 'a4');
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
@@ -189,8 +189,9 @@ export const generateDashboardPDF = async (data: DashboardData, t: any): Promise
 export const generateDashboardPDFWithCharts = async (
   dashboardElement: HTMLElement,
   data: DashboardData,
-  t: any
+  t: (key: string) => string
 ): Promise<void> => {
+  const tTyped = (key: string) => t(key) as string;
   try {
     // Generate canvas from the dashboard element
     const canvas = await html2canvas(dashboardElement, {
@@ -227,7 +228,7 @@ export const generateDashboardPDFWithCharts = async (
     }
 
     // Add header and footer to all pages
-    const totalPages = (pdf as any).internal.pages.length - 1;
+    const totalPages = (pdf as unknown as { internal: { pages: unknown[] } }).internal.pages.length - 1;
     for (let i = 1; i <= totalPages; i++) {
       pdf.setPage(i);
 

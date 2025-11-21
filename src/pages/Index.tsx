@@ -172,7 +172,7 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {t("index.testimonials.items", { returnObjects: true }).map((testimonial: any, index: number) => (
+            {t("index.testimonials.items", { returnObjects: true }).map((testimonial: { name: string; location: string; content: string; role: string }, index: number) => (
               <div key={index} className="bg-card border rounded-xl p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
