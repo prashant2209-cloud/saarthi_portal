@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
+import { useUser, useAuth as useClerkAuth } from '@clerk/clerk-react';
 import { User, authAPI } from '../services/api';
 
 interface AuthContextType {
@@ -26,80 +27,49 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { user: clerkUser, isLoaded } = useUser();
+  const { getToken, signOut } = useClerkAuth();
 
-  // Initialize auth state from localStorage
-  useEffect(() => {
-    const initAuth = async () => {
-      const storedToken = localStorage.getItem('token');
-      const storedUser = localStorage.getItem('user');
-
-      if (storedToken && storedUser) {
-        try {
-          setToken(storedToken);
-          setUser(JSON.parse(storedUser));
-
-          // Verify token is still valid
-          const response = await authAPI.getMe();
-          setUser(response.data.data.user);
-          localStorage.setItem('user', JSON.stringify(response.data.data.user));
-        } catch (error) {
-          // Token is invalid, clear storage
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          setToken(null);
-          setUser(null);
-        }
-      }
-      setLoading(false);
-    };
-
-    initAuth();
-  }, []);
+  // Convert Clerk user to our User type
+  const user: User | null = clerkUser ? {
+    id: clerkUser.id,
+    name: clerkUser.fullName || clerkUser.firstName || '',
+    email: clerkUser.primaryEmailAddress?.emailAddress || '',
+    avatar: clerkUser.imageUrl,
+    location: '', // Will be updated from backend
+    bio: '',
+    role: 'user',
+    issuesReported: 0,
+    issuesResolved: 0,
+    reputation: 0,
+    createdAt: clerkUser.createdAt?.toISOString() || '',
+  } : null;
 
   const login = async (email: string, password: string) => {
-    const response = await authAPI.login({ email, password });
-    const { user: userData, token: newToken } = response.data.data;
-
-    setUser(userData);
-    setToken(newToken);
-
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(userData));
+    // Clerk handles login via SignIn component
+    throw new Error('Use Clerk SignIn component for login');
   };
 
   const register = async (name: string, email: string, password: string, location?: string) => {
-    const response = await authAPI.register({ name, email, password, location });
-    const { user: userData, token: newToken } = response.data.data;
-
-    setUser(userData);
-    setToken(newToken);
-
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(userData));
+    // Clerk handles registration via SignUp component
+    throw new Error('Use Clerk SignUp component for registration');
   };
 
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+  const logout = async () => {
+    await signOut();
   };
 
   const updateProfile = async (data: { name?: string; location?: string; bio?: string }) => {
-    const response = await authAPI.updateProfile(data);
-    const updatedUser = response.data.data.user;
+    if (!user) throw new Error('No user logged in');
 
-    setUser(updatedUser);
-    localStorage.setItem('user', JSON.stringify(updatedUser));
+    const response = await authAPI.updateProfile(data);
+    // Note: Clerk user data is managed by Clerk, backend syncs additional data
   };
 
   const value: AuthContextType = {
     user,
-    token,
-    loading,
+    token: null, // Clerk manages tokens internally
+    loading: !isLoaded,
     login,
     register,
     logout,

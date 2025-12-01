@@ -1,24 +1,11 @@
 import express from 'express';
-import {
-  getComments,
-  createComment,
-  updateComment,
-  deleteComment,
-  toggleCommentUpvote,
-  createCommentValidation,
-  updateCommentValidation,
-} from '../controllers/commentController';
-import { protect } from '../middleware/auth';
+import { getComments, createComment, deleteComment } from '../controllers/commentController';
+import { auth, optionalAuth } from '../middleware/auth';
 
 const router = express.Router();
 
-// All comment routes are nested under issues
-router.get('/issues/:issueId/comments', getComments);
-router.post('/issues/:issueId/comments', protect, createCommentValidation, createComment);
-
-// Direct comment routes
-router.put('/:id', protect, updateCommentValidation, updateComment);
-router.delete('/:id', protect, deleteComment);
-router.post('/:id/upvote', protect, toggleCommentUpvote);
+router.get('/:issueId', optionalAuth, getComments);
+router.post('/:issueId', auth, createComment);
+router.delete('/:id', auth, deleteComment);
 
 export default router;

@@ -1,124 +1,110 @@
-import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/User';
+import { verifyToken, createClerkClient } from '@clerk/backend';
+import User, { IUser } from '../models/User';
 
-interface AuthRequest extends Request {
-  user?: any;
+const clerkClient = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
+
+export interface AuthRequest extends Request {
+  user?: IUser;
+  auth?: {
+    userId: string;
+    sessionId: string;
+  };
 }
 
-export const protect = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let token: string | undefined;
-
-    // Check for token in header
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
-    ) {
-      token = req.headers.authorization.split(' ')[1];
-    }
-
-    // Check for token in cookies (if using cookies)
-    else if (req.cookies?.token) {
-      token = req.cookies.token;
-    }
+    const token = req.headers.authorization?.replace('Bearer ', '');
 
     if (!token) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
-        message: 'Not authorized to access this route',
+        message: 'Access denied. No token provided.',
       });
-      return;
     }
 
-    try {
-      // Verify token
-      const decoded = jwt.verify(
-        token,
-        process.env.JWT_SECRET || 'fallback_secret'
-      ) as JwtPayload;
+    // Verify token using Clerk
+    const verifiedToken = await verifyToken(token, {
+      secretKey: process.env.CLERK_SECRET_KEY,
+      jwtKey: process.env.CLERK_JWT_KEY,
+    });
 
-      req.user = await User.findById(decoded.id);
+    const clerkId = verifiedToken.sub;
 
-      if (!req.user) {
-        res.status(401).json({
-          success: false,
-          message: 'No user found with this token',
-        });
-        return;
+    if (!clerkId) {
+      return res.status(401).json({
+        success: false,
+        message: 'Access denied. Invalid token.',
+      });
+    }
+
+    // Find user in local DB
+    let user = await User.findOne({ clerkId });
+
+    // Sync user if not found (First time login)
+    if (!user) {
+      try {
+        const clerkUser = await clerkClient.users.getUser(clerkId);
+        const email = clerkUser.emailAddresses[0]?.emailAddress;
+        const name = clerkUser.fullName || clerkUser.firstName || 'User';
+        const avatar = clerkUser.imageUrl;
+
+        if (email) {
+          user = await User.create({
+            clerkId,
+            name,
+            email,
+            avatar,
+            role: 'user',
+          });
+        }
+      } catch (syncError) {
+        console.error('Error syncing user from Clerk:', syncError);
       }
-
-      next();
-    } catch (err) {
-      res.status(401).json({
-        success: false,
-        message: 'Not authorized to access this route',
-      });
-      return;
     }
-  } catch (err) {
-    next(err);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Access denied. User not found in local database.',
+      });
+    }
+
+    (req as AuthRequest).user = user;
+    (req as AuthRequest).auth = { userId: clerkId, sessionId: verifiedToken.sid || '' };
+    next();
+  } catch (error) {
+    console.error('Auth middleware error:', error);
+    res.status(401).json({
+      success: false,
+      message: 'Access denied. Invalid token.',
+    });
   }
 };
 
-export const authorize = (...roles: string[]) => {
-  return (req: AuthRequest, res: Response, next: NextFunction): void => {
-    if (!req.user) {
-      res.status(401).json({
-        success: false,
-        message: 'User not authenticated',
-      });
-      return;
-    }
-
-    if (!roles.includes(req.user.role)) {
-      res.status(403).json({
-        success: false,
-        message: `User role ${req.user.role} is not authorized to access this route`,
-      });
-      return;
-    }
-
-    next();
-  };
-};
-
-export const optionalAuth = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+export const optionalAuth = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let token: string | undefined;
+    const token = req.headers.authorization?.replace('Bearer ', '');
 
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
-    ) {
-      token = req.headers.authorization.split(' ')[1];
-    } else if (req.cookies?.token) {
-      token = req.cookies.token;
+    if (!token) {
+      return next();
     }
 
-    if (token) {
-      try {
-        const decoded = jwt.verify(
-          token,
-          process.env.JWT_SECRET || 'fallback_secret'
-        ) as any;
-        req.user = await User.findById(decoded.id);
-      } catch (err) {
-        // Token is invalid but we don't throw error for optional auth
-        req.user = null;
+    const verifiedToken = await verifyToken(token, {
+      secretKey: process.env.CLERK_SECRET_KEY,
+      jwtKey: process.env.CLERK_JWT_KEY,
+    });
+
+    const clerkId = verifiedToken.sub;
+    if (clerkId) {
+      const user = await User.findOne({ clerkId });
+      if (user) {
+        (req as AuthRequest).user = user;
       }
     }
-
     next();
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    // If token is invalid, just proceed without user
+    next();
   }
 };

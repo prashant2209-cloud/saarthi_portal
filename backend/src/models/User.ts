@@ -1,117 +1,34 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import bcrypt from 'bcryptjs';
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {
-  _id: mongoose.Types.ObjectId;
-  name: string;
-  email: string;
-  password: string;
-  avatar?: string;
-  location?: string;
-  bio?: string;
-  role: 'user' | 'admin';
-  isVerified: boolean;
-  issuesReported: number;
-  issuesResolved: number;
-  reputation: number;
-  createdAt: Date;
-  updatedAt: Date;
-  comparePassword(candidatePassword: string): Promise<boolean>;
+    clerkId: string;
+    name: string;
+    email: string;
+    avatar?: string;
+    location?: string;
+    bio?: string;
+    role: 'user' | 'admin';
+    issuesReported: number;
+    issuesResolved: number;
+    reputation: number;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-const userSchema = new Schema<IUser>(
-  {
-    name: {
-      type: String,
-      required: [true, 'Name is required'],
-      trim: true,
-      maxlength: [50, 'Name cannot be more than 50 characters'],
+const UserSchema = new Schema<IUser>(
+    {
+        clerkId: { type: String, required: true, unique: true },
+        name: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
+        avatar: { type: String },
+        location: { type: String },
+        bio: { type: String },
+        role: { type: String, enum: ['user', 'admin'], default: 'user' },
+        issuesReported: { type: Number, default: 0 },
+        issuesResolved: { type: Number, default: 0 },
+        reputation: { type: Number, default: 0 },
     },
-    email: {
-      type: String,
-      required: [true, 'Email is required'],
-      unique: true,
-      lowercase: true,
-      trim: true,
-      match: [
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        'Please enter a valid email',
-      ],
-    },
-    password: {
-      type: String,
-      required: [true, 'Password is required'],
-      minlength: [6, 'Password must be at least 6 characters'],
-      select: false, // Don't include password in queries by default
-    },
-    avatar: {
-      type: String,
-      default: '',
-    },
-    location: {
-      type: String,
-      default: 'Delhi, India',
-    },
-    bio: {
-      type: String,
-      maxlength: [500, 'Bio cannot be more than 500 characters'],
-      default: '',
-    },
-    role: {
-      type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
-    },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-    issuesReported: {
-      type: Number,
-      default: 0,
-    },
-    issuesResolved: {
-      type: Number,
-      default: 0,
-    },
-    reputation: {
-      type: Number,
-      default: 0,
-    },
-  },
-  {
-    timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  }
+    { timestamps: true }
 );
 
-// Index for better query performance (removed duplicate index)
-userSchema.index({ createdAt: -1 });
-
-// Hash password before saving
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-
-  try {
-    const salt = await bcrypt.genSalt(12);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (error: unknown) {
-    next(error as Error);
-  }
-});
-
-// Compare password method
-userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
-  return bcrypt.compare(candidatePassword, this.password);
-};
-
-// Virtual for user's full profile URL
-userSchema.virtual('profileUrl').get(function () {
-  return `/profile/${this._id}`;
-});
-
-const User = mongoose.model<IUser>('User', userSchema);
-
-export default User;
+export default mongoose.model<IUser>('User', UserSchema);

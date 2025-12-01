@@ -23,13 +23,13 @@ const Chatbot = () => {
     {
       id: 1,
       type: "bot",
-      content: t("chatbot.welcome.message"),
+      content: t("message"),
       timestamp: new Date().toLocaleTimeString(),
       suggestions: [
-        t("chatbot.suggestions.report"),
-        t("chatbot.suggestions.categories"),
-        t("chatbot.suggestions.status"),
-        t("chatbot.suggestions.tips")
+        t("report"),
+        t("categories"),
+        t("status"),
+        t("tips")
       ]
     }
   ]);
@@ -46,10 +46,10 @@ const Chatbot = () => {
   }, [messages]);
 
   const quickResponses: Record<string, string> = {
-    "how do i report an issue": t("chatbot.responses.report"),
-    "what are the issue categories": t("chatbot.responses.categories"),
-    "check my complaint status": t("chatbot.responses.status"),
-    "tips for effective reporting": t("chatbot.responses.tips")
+    "how do i report an issue": t("report"),
+    "what are the issue categories": t("categories"),
+    "check my complaint status": t("status"),
+    "tips for effective reporting": t("tips")
   };
 
   const handleSend = () => {
@@ -69,7 +69,7 @@ const Chatbot = () => {
     // Simulate AI response
     setTimeout(() => {
       const lowerInput = input.toLowerCase();
-      let botResponse = t("chatbot.responses.default");
+      let botResponse = t("default");
 
       // Check for keyword matches
       for (const [key, value] of Object.entries(quickResponses)) {

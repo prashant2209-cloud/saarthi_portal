@@ -1,28 +1,23 @@
 import express from 'express';
 import {
-  getIssues,
-  getIssue,
-  createIssue,
-  updateIssue,
-  deleteIssue,
-  toggleUpvote,
-  getIssueStats,
-  createIssueValidation,
-  updateIssueValidation,
+    getIssues,
+    createIssue,
+    getIssueById,
+    updateIssue,
+    deleteIssue,
+    upvoteIssue,
+    getStats,
 } from '../controllers/issueController';
-import { protect, optionalAuth } from '../middleware/auth';
+import { auth, optionalAuth } from '../middleware/auth';
 
 const router = express.Router();
 
-// Public routes
 router.get('/', optionalAuth, getIssues);
-router.get('/stats', getIssueStats);
-router.get('/:id', optionalAuth, getIssue);
-
-// Protected routes
-router.post('/', protect, createIssueValidation, createIssue);
-router.put('/:id', protect, updateIssueValidation, updateIssue);
-router.delete('/:id', protect, deleteIssue);
-router.post('/:id/upvote', protect, toggleUpvote);
+router.post('/', auth, createIssue);
+router.get('/stats', getStats);
+router.get('/:id', optionalAuth, getIssueById);
+router.put('/:id', auth, updateIssue);
+router.delete('/:id', auth, deleteIssue);
+router.put('/:id/upvote', auth, upvoteIssue);
 
 export default router;
