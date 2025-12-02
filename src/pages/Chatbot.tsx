@@ -52,7 +52,7 @@ const Chatbot = () => {
     "tips for effective reporting": t("tips")
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
 
     const userMessage: Message = {
@@ -62,38 +62,49 @@ const Chatbot = () => {
       timestamp: new Date().toLocaleTimeString()
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const lowerInput = input.toLowerCase();
-      let botResponse = t("default");
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: input }),
+      });
 
-      // Check for keyword matches
-      for (const [key, value] of Object.entries(quickResponses)) {
-        if (lowerInput.includes(key) || lowerInput.includes(key.split(' ').join(''))) {
-          botResponse = value;
-          break;
-        }
+      const data = await response.json();
+
+      if (data.success) {
+        const botMessage: Message = {
+          id: messages.length + 2,
+          type: "bot",
+          content: data.reply,
+          timestamp: new Date().toLocaleTimeString(),
+          suggestions: [
+            t("chatbot.suggestions.report"),
+            t("chatbot.suggestions.categories"),
+            t("chatbot.suggestions.status")
+          ]
+        };
+        setMessages(prev => [...prev, botMessage]);
+      } else {
+        throw new Error(data.message || 'Failed to get response');
       }
-
-      const botMessage: Message = {
+    } catch (error) {
+      console.error('Chat error:', error);
+      const errorMessage: Message = {
         id: messages.length + 2,
         type: "bot",
-        content: botResponse,
+        content: "Sorry, I'm having trouble connecting to the AI right now. Please try again later.",
         timestamp: new Date().toLocaleTimeString(),
-        suggestions: [
-          t("chatbot.suggestions.report"),
-          t("chatbot.suggestions.categories"),
-          t("chatbot.suggestions.status")
-        ]
       };
-
-      setMessages(prev => [...prev, botMessage]);
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -188,16 +199,15 @@ const Chatbot = () => {
                   )}
                   <div className={`flex flex-col gap-2 max-w-[80%] ${message.type === "user" ? "items-end" : ""}`}>
                     <div
-                      className={`p-3 rounded-lg whitespace-pre-wrap ${
-                        message.type === "user"
+                      className={`p-3 rounded-lg whitespace-pre-wrap ${message.type === "user"
                           ? "bg-primary text-primary-foreground"
                           : "bg-muted"
-                      }`}
+                        }`}
                     >
                       {message.content}
                     </div>
                     <span className="text-xs text-muted-foreground">{message.timestamp}</span>
-                    
+
                     {message.suggestions && (
                       <div className="flex flex-wrap gap-2 mt-2">
                         {message.suggestions.map((suggestion, idx) => (
@@ -222,7 +232,7 @@ const Chatbot = () => {
                   )}
                 </div>
               ))}
-              
+
               {isTyping && (
                 <div className="flex gap-3">
                   <Avatar className="h-8 w-8">
